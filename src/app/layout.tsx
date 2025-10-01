@@ -22,7 +22,7 @@ export default function RootLayout({
         <html lang='en'>
             <body className={`${roboto.className} antialiased`}>
                 <SideNav />
-                <main>{children}</main>
+                <main className='w-4/5'>{children}</main>
             </body>
         </html>
     )
