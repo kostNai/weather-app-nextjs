@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
 import SideNav from '@/components/sideNav/SideNav'
+import { CityNameProvider } from '@/context/SearchCityContext'
 
 const roboto = Roboto({
     variable: '--font-geist-sans',
@@ -21,8 +22,10 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <body className={`${roboto.className} antialiased`}>
-                <SideNav />
-                <main className='w-4/5'>{children}</main>
+                <CityNameProvider>
+                    <SideNav />
+                    <main className='w-4/5'>{children}</main>
+                </CityNameProvider>
             </body>
         </html>
     )
