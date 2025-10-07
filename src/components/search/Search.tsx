@@ -1,5 +1,5 @@
 'use client'
-import { useCityName } from '@/context/SearchCityContext'
+import { useCity, useCityName } from '@/context/SearchCityContext'
 import { countries } from '@/data/countries'
 import { GeoCodingResponse } from '@/types'
 import { useEffect, useState } from 'react'
@@ -13,6 +13,7 @@ export default function Search() {
     const [isCitiesListVisible, setCitiesListVisible] = useState<boolean>(false)
 
     const { cityName, setCityName } = useCityName()
+    const { city, setCity } = useCity()
 
     useEffect(() => {
         if (cityName) {
@@ -28,7 +29,16 @@ export default function Search() {
             }
             fetchCity()
         }
-    }, [cityName])
+    }, [cityName, citiesList.length])
+
+    useEffect(() => {
+        console.log(city)
+    }, [city])
+
+    const onClickSearchIconHandler = () => {
+        setCityName(inputValue)
+        if (citiesList.length > 0) setCitiesListVisible(true)
+    }
 
     return (
         <div className='relative ml-8 w-fit'>
@@ -45,10 +55,7 @@ export default function Search() {
                 className='absolute right-1 top-1 cursor-pointer transition duration-300 active:scale-90'
                 size={24}
                 color='#171B60'
-                onClick={() => {
-                    setCityName(inputValue)
-                    setCitiesListVisible(true)
-                }}
+                onClick={onClickSearchIconHandler}
             />
             {isCitiesListVisible && (
                 <div
@@ -59,6 +66,7 @@ export default function Search() {
                         <div
                             key={indx}
                             className='p-2 rounded-md flex gap-4 justify-between transition duration-300 cursor-pointer hover:bg-gray-300/50'
+                            onClick={() => setCity(city)}
                         >
                             <p>{city.name}</p>
                             <p>{city.state}</p>

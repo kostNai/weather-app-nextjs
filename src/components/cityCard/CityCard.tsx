@@ -1,5 +1,5 @@
 'use client'
-import { useCityName } from '@/context/SearchCityContext'
+import { useCity, useCityName } from '@/context/SearchCityContext'
 import { countries } from '@/data/countries'
 import Image from 'next/image'
 import React, { Suspense, useEffect, useState } from 'react'
@@ -21,7 +21,7 @@ function getRandomValue(min: number, max: number): number {
 
 export default function CityCard() {
     const [imageUrl, setImageUrl] = useState<string>('')
-    const [city, setCity] = useState<string>('')
+    const { city, setCity } = useCity()
 
     const { cityName } = useCityName()
     const capitalizeFirstLetter = (str: string): string =>

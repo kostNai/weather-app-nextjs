@@ -1,6 +1,6 @@
 import CityCard from '@/components/cityCard/CityCard'
+import CurrentLocationInfo from '@/components/currentLocationInfo/CurrentLocationInfo'
 import Search from '@/components/search/Search'
-import { MdOutlineMyLocation } from 'react-icons/md'
 
 export default async function Home() {
     return (
@@ -10,19 +10,8 @@ export default async function Home() {
             </div>
             <div className='pl-8 w-full flex h-full'>
                 <div className='w-[60%] pr-8 pt-8'>
-                    <div className='w-full flex justify-between items-center'>
-                        <div className='flex flex-col gap-1'>
-                            <p className='text-gray-400 text-sm'>
-                                Поточна локація
-                            </p>
-                            <h4 className='font-bold'>Дніпро, Україна</h4>
-                        </div>
-                        <MdOutlineMyLocation
-                            size={24}
-                            className='bg-gray-300/50 rounded-full'
-                        />
-                    </div>
-                    <div>
+                    <CurrentLocationInfo />
+                    <div className='mt-4'>
                         <CityCard />
                     </div>
                     <div></div>
