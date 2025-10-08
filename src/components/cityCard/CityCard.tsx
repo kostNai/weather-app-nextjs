@@ -1,5 +1,5 @@
 'use client'
-import { useCity, useCityName } from '@/context/SearchCityContext'
+import { useCity, useCityName, useWeather } from '@/context/Context'
 import { countries } from '@/data/countries'
 import Image from 'next/image'
 import React, { Suspense, useEffect, useState } from 'react'
@@ -14,6 +14,7 @@ import {
 import { WiCelsius } from 'react-icons/wi'
 
 const pixapbayApiKey = process.env.NEXT_PUBLIC_PIXABAY_API_KEY
+const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY
 
 function getRandomValue(min: number, max: number): number {
     return Math.random() * (max - min) + min
@@ -24,6 +25,8 @@ export default function CityCard() {
     const { city, setCity } = useCity()
 
     const { cityName } = useCityName()
+    const { weather, setWeather } = useWeather()
+
     const capitalizeFirstLetter = (str: string): string =>
         str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -43,24 +46,36 @@ export default function CityCard() {
     getCurrentTime()
 
     useEffect(() => {
-        // const fetchImageUrl = async () => {
-        //     const res = await fetch(
-        //         `https://pixabay.com/api/?key=${pixapbayApiKey}&q=${cityName}+urban&image_type=photo`
-        //     )
-        //     const json = await res.json()
-        //     const images = json.hits
-        //     const index = Math.ceil(getRandomValue(0, 19))
-        //     if (Array.isArray(images)) {
-        //         images.map((img, indx: number) => {
-        //             if (indx === index) {
-        //                 setImageUrl(img.largeImageURL)
-        //                 console.log(img)
-        //             }
-        //         })
-        //     }
-        // }
-        // fetchImageUrl()
-    }, [cityName])
+        const fetchImageUrl = async () => {
+            const res = await fetch(
+                `https://pixabay.com/api/?key=${pixapbayApiKey}&q=${city.name}+urban&image_type=photo`
+            )
+            const json = await res.json()
+            const images = json.hits
+            const index = Math.ceil(getRandomValue(0, 19))
+            if (Array.isArray(images)) {
+                images.map((img, indx: number) => {
+                    if (indx === index) {
+                        setImageUrl(img.largeImageURL)
+                        console.log(city)
+                    }
+                })
+            }
+        }
+        fetchImageUrl()
+    }, [city])
+    useEffect(() => {
+        const fetchWeather = async () => {
+            const res = await fetch(
+                `https://api.openweathermap.org/data/3.0/onecall?lat=${city.lat}&lon=${city.lon}&appid=${weatherApiKey}&exclude=hourly,minutely&lang=uk&units=metric`
+            )
+            const json = await res.json()
+
+            setWeather(json)
+        }
+        fetchWeather()
+        console.log(weather)
+    }, [city, setWeather])
 
     return (
         <div className='w-2/3 h-[300px] relative text-white'>
@@ -89,7 +104,7 @@ export default function CityCard() {
                     <FaSun color='white' path='white' />
                     <FaSnowflake color='white' path='white' /> */}
                     <p className='text-6xl flex items-start'>
-                        12
+                        {weather && Math.ceil(weather.current.temp)}
                         <WiCelsius color='white' path='white' size={32} />
                     </p>
                 </div>
@@ -98,7 +113,8 @@ export default function CityCard() {
                         {getCurrentDate()}, {getCurrentTime()}
                     </p>
                     <p className='flex items-center gap-2'>
-                        <FaCloud /> Пасмурно
+                        <FaCloud />{' '}
+                        {weather && weather.current.weather[0].description}
                     </p>
                 </div>
             </div>

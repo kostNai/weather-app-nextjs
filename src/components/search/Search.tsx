@@ -1,5 +1,5 @@
 'use client'
-import { useCity, useCityName } from '@/context/SearchCityContext'
+import { useCity, useCityName } from '@/context/Context'
 import { countries } from '@/data/countries'
 import { GeoCodingResponse } from '@/types'
 import { useEffect, useState } from 'react'
@@ -23,6 +23,8 @@ export default function Search() {
                 )
 
                 const json = await res.json()
+
+                console.log(json)
 
                 setCitiesList(json)
                 if (citiesList.length > 0) setCitiesListVisible(true)
