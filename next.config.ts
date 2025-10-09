@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
                 hostname: 'cdn.pixabay.com',
                 pathname: '/**', // optional: allows all paths
             },
+            {
+                protocol: 'https',
+                hostname: 'openweathermap.org',
+                pathname: '/**', // optional: allows all paths
+            },
         ],
     },
 }

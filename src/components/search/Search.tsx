@@ -13,7 +13,7 @@ export default function Search() {
     const [isCitiesListVisible, setCitiesListVisible] = useState<boolean>(false)
 
     const { cityName, setCityName } = useCityName()
-    const { city, setCity } = useCity()
+    const { setCity } = useCity()
 
     useEffect(() => {
         if (cityName) {
@@ -23,19 +23,12 @@ export default function Search() {
                 )
 
                 const json = await res.json()
-
-                console.log(json)
-
                 setCitiesList(json)
                 if (citiesList.length > 0) setCitiesListVisible(true)
             }
             fetchCity()
         }
     }, [cityName, citiesList.length])
-
-    useEffect(() => {
-        console.log(city)
-    }, [city])
 
     const onClickSearchIconHandler = () => {
         setCityName(inputValue)

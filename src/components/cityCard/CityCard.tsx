@@ -10,6 +10,7 @@ import {
     FaCloudSun,
     FaSun,
     FaSnowflake,
+    FaMoon,
 } from 'react-icons/fa6'
 import { WiCelsius } from 'react-icons/wi'
 
@@ -19,12 +20,13 @@ const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY
 function getRandomValue(min: number, max: number): number {
     return Math.random() * (max - min) + min
 }
+const setIconUrl = (iconCode: string) => {
+    return `https://openweathermap.org/img/wn/${iconCode}.png`
+}
 
 export default function CityCard() {
     const [imageUrl, setImageUrl] = useState<string>('')
-    const { city, setCity } = useCity()
-
-    const { cityName } = useCityName()
+    const { city } = useCity()
     const { weather, setWeather } = useWeather()
 
     const capitalizeFirstLetter = (str: string): string =>
@@ -40,7 +42,13 @@ export default function CityCard() {
     const getCurrentTime = (): string => {
         const today = new Date()
 
-        return `${today.getHours()}:${today.getMinutes()}`
+        return `${
+            today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()
+        }:${
+            today.getMinutes() < 10
+                ? `0${today.getMinutes()}`
+                : today.getMinutes()
+        }`
     }
 
     getCurrentTime()
@@ -57,7 +65,6 @@ export default function CityCard() {
                 images.map((img, indx: number) => {
                     if (indx === index) {
                         setImageUrl(img.largeImageURL)
-                        console.log(city)
                     }
                 })
             }
@@ -72,9 +79,13 @@ export default function CityCard() {
             const json = await res.json()
 
             setWeather(json)
+            localStorage.setItem('weather', JSON.stringify(json))
         }
         fetchWeather()
-        console.log(weather)
+
+        if (localStorage.getItem('weather')) {
+            setWeather(JSON.parse(localStorage.getItem('weather')!))
+        }
     }, [city, setWeather])
 
     return (
@@ -96,26 +107,46 @@ export default function CityCard() {
                 />
             </div>
             <div className='absolute top-0 left-0 pt-4 px-4 flex justify-between items-center w-full'>
-                <div className='flex items-center'>
-                    <FaCloud color='white' path='white' size={64} />
-                    {/* <FaCloudRain color='white' path='white' />
-                    <FaCloudSun color='white' path='white' />
-                    <FaCloudShowersHeavy color='white' path='white' />
-                    <FaSun color='white' path='white' />
-                    <FaSnowflake color='white' path='white' /> */}
-                    <p className='text-6xl flex items-start'>
-                        {weather && Math.ceil(weather.current.temp)}
-                        <WiCelsius color='white' path='white' size={32} />
-                    </p>
-                </div>
+                {weather && (
+                    <div className='flex items-center'>
+                        <div className='relative w-15 h-15'>
+                            <Image
+                                src={setIconUrl(
+                                    weather.current.weather[0].icon
+                                )}
+                                alt='icon'
+                                fill
+                                style={{ objectFit: 'contain' }}
+                            />
+                        </div>
+                        <p className='text-6xl flex items-start'>
+                            {weather && Math.ceil(weather.current.temp)}
+                            <WiCelsius color='white' path='white' size={32} />
+                        </p>
+                    </div>
+                )}
                 <div className='flex flex-col'>
                     <p>
                         {getCurrentDate()}, {getCurrentTime()}
                     </p>
-                    <p className='flex items-center gap-2'>
-                        <FaCloud />{' '}
-                        {weather && weather.current.weather[0].description}
-                    </p>
+                    {weather && (
+                        <div className='flex gap-2 items-center'>
+                            <div className='relative w-6 h-6'>
+                                <Image
+                                    src={setIconUrl(
+                                        weather.current.weather[0].icon
+                                    )}
+                                    alt='icon'
+                                    fill
+                                    style={{ objectFit: 'contain' }}
+                                />
+                            </div>
+                            <p className='flex items-center gap-2'>
+                                {weather &&
+                                    weather.current.weather[0].description}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

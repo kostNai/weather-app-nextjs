@@ -9,12 +9,14 @@ export default function CurrentLocationInfo() {
 
     return (
         <div className='w-full flex justify-between items-center'>
-            <div className='flex flex-col gap-1'>
-                <p className='text-gray-400 text-sm'>Поточна локація</p>
-                <h4 className='font-bold'>
-                    {cityName}, {countries[city.country]}
-                </h4>
-            </div>
+            {cityName && (
+                <div className='flex flex-col gap-1'>
+                    <p className='text-gray-400 text-sm'>Поточна локація</p>
+                    <h4 className='font-bold'>
+                        {cityName}, {countries[city.country]}
+                    </h4>
+                </div>
+            )}
             <MdOutlineMyLocation
                 size={24}
                 className='bg-gray-300/50 rounded-full'
