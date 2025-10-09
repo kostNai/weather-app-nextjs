@@ -1,17 +1,9 @@
 'use client'
-import { useCity, useCityName, useWeather } from '@/context/Context'
-import { countries } from '@/data/countries'
+import { useCity, useWeather } from '@/context/Context'
+import { getCurrentDate } from '@/helpers/getCurrentDate'
+import { getCurrentTime } from '@/helpers/getCurrentTime'
 import Image from 'next/image'
-import React, { Suspense, useEffect, useState } from 'react'
-import {
-    FaCloud,
-    FaCloudRain,
-    FaCloudShowersHeavy,
-    FaCloudSun,
-    FaSun,
-    FaSnowflake,
-    FaMoon,
-} from 'react-icons/fa6'
+import React, { useEffect, useState } from 'react'
 import { WiCelsius } from 'react-icons/wi'
 
 const pixapbayApiKey = process.env.NEXT_PUBLIC_PIXABAY_API_KEY
@@ -29,29 +21,8 @@ export default function CityCard() {
     const { city } = useCity()
     const { weather, setWeather } = useWeather()
 
-    const capitalizeFirstLetter = (str: string): string =>
-        str.charAt(0).toUpperCase() + str.slice(1)
-
-    const getCurrentDate = (): string => {
-        const today = new Date()
-        const dayName = today.toLocaleDateString('uk-UA', { weekday: 'long' })
-
-        return capitalizeFirstLetter(dayName)
-    }
-
-    const getCurrentTime = (): string => {
-        const today = new Date()
-
-        return `${
-            today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()
-        }:${
-            today.getMinutes() < 10
-                ? `0${today.getMinutes()}`
-                : today.getMinutes()
-        }`
-    }
-
-    getCurrentTime()
+    const currentDate = getCurrentDate()
+    const currentTime = getCurrentTime()
 
     useEffect(() => {
         const fetchImageUrl = async () => {
@@ -127,7 +98,7 @@ export default function CityCard() {
                 )}
                 <div className='flex flex-col'>
                     <p>
-                        {getCurrentDate()}, {getCurrentTime()}
+                        {currentDate}, {currentTime}
                     </p>
                     {weather && (
                         <div className='flex gap-2 items-center'>

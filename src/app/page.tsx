@@ -1,6 +1,8 @@
+import AddCity from '@/components/addCity/AddCity'
 import CityCard from '@/components/cityCard/CityCard'
 import CurrentLocationInfo from '@/components/currentLocationInfo/CurrentLocationInfo'
 import Search from '@/components/search/Search'
+import TodaysHighlights from '@/components/todaysHighlights/TodaysHighlights'
 
 export default async function Home() {
     return (
@@ -11,10 +13,16 @@ export default async function Home() {
             <div className='pl-8 w-full flex h-full'>
                 <div className='w-[60%] pr-8 pt-8'>
                     <CurrentLocationInfo />
-                    <div className='mt-4'>
+                    <div className='mt-4 flex gap-10 h-fit'>
                         <CityCard />
+                        <AddCity />
                     </div>
-                    <div></div>
+                    <div className='mt-10'>
+                        <h2 className='text-2xl font-bold'>
+                            Основні показники
+                        </h2>
+                        <TodaysHighlights />
+                    </div>
                     <div></div>
                 </div>
                 <div className='w-[40%] h-full bg-[#F6F4FC] '></div>
