@@ -27,6 +27,7 @@ export default function Search() {
                 if (citiesList.length > 0) setCitiesListVisible(true)
             }
             fetchCity()
+            localStorage.setItem('cityName', cityName)
         }
     }, [cityName, citiesList.length])
 

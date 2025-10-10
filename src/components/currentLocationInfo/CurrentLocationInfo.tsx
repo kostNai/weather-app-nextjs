@@ -1,11 +1,17 @@
 'use client'
 import { useCity, useCityName } from '@/context/Context'
 import { countries } from '@/data/countries'
+import { useEffect } from 'react'
 import { MdOutlineMyLocation } from 'react-icons/md'
 
 export default function CurrentLocationInfo() {
     const { city } = useCity()
-    const { cityName } = useCityName()
+    const { cityName, setCityName } = useCityName()
+
+    useEffect(() => {
+        if (localStorage.getItem('cityName'))
+            setCityName(localStorage.getItem('cityName')!)
+    }, [setCityName, cityName])
 
     return (
         <div className='w-full flex justify-between items-center'>

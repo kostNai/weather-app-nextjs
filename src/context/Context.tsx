@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { GeoCodingResponse } from '@/types'
+import { GeoCodingResponse, WeatherType } from '@/types'
 import { createContext, useState, useContext } from 'react'
 
 type CityNameContextType = {
@@ -12,11 +11,16 @@ type CityContextType = {
     setCity: (city: GeoCodingResponse) => void
 }
 
+type WeatherContextType = {
+    weather: WeatherType | undefined
+    setWeather: (weather: WeatherType | undefined) => void
+}
+
 const CityNameContext = createContext<CityNameContextType | undefined>(
     undefined
 )
 const CityContext = createContext<CityContextType | undefined>(undefined)
-const WeatherContext = createContext<any | undefined>(undefined)
+const WeatherContext = createContext<WeatherContextType | undefined>(undefined)
 
 export function CityNameProvider({ children }: { children: React.ReactNode }) {
     const [cityName, setCityName] = useState('')
@@ -27,7 +31,7 @@ export function CityNameProvider({ children }: { children: React.ReactNode }) {
         name: '',
         state: '',
     })
-    const [weather, setWeather] = useState<any>(undefined)
+    const [weather, setWeather] = useState<WeatherType | undefined>(undefined)
     return (
         <CityNameContext.Provider value={{ cityName, setCityName }}>
             <CityContext.Provider value={{ city, setCity }}>

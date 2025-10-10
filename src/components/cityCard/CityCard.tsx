@@ -102,16 +102,18 @@ export default function CityCard() {
                     </p>
                     {weather && (
                         <div className='flex gap-2 items-center'>
-                            <div className='relative w-6 h-6'>
-                                <Image
-                                    src={setIconUrl(
-                                        weather.current.weather[0].icon
-                                    )}
-                                    alt='icon'
-                                    fill
-                                    style={{ objectFit: 'contain' }}
-                                />
-                            </div>
+                            {weather && (
+                                <div className='relative w-6 h-6'>
+                                    <Image
+                                        src={setIconUrl(
+                                            weather.current.weather[0].icon
+                                        )}
+                                        alt='icon'
+                                        fill
+                                        style={{ objectFit: 'contain' }}
+                                    />
+                                </div>
+                            )}
                             <p className='flex items-center gap-2'>
                                 {weather &&
                                     weather.current.weather[0].description}
