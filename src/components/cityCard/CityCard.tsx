@@ -2,6 +2,7 @@
 import { useCity, useWeather } from '@/context/Context'
 import { getCurrentDate } from '@/helpers/getCurrentDate'
 import { getCurrentTime } from '@/helpers/getCurrentTime'
+import { setIconUrl } from '@/helpers/setIconUrl'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { WiCelsius } from 'react-icons/wi'
@@ -12,9 +13,9 @@ const weatherApiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY
 function getRandomValue(min: number, max: number): number {
     return Math.random() * (max - min) + min
 }
-const setIconUrl = (iconCode: string) => {
-    return `https://openweathermap.org/img/wn/${iconCode}.png`
-}
+// const setIconUrl = (iconCode: string) => {
+//     return `https://openweathermap.org/img/wn/${iconCode}.png`
+// }
 
 export default function CityCard() {
     const [imageUrl, setImageUrl] = useState<string>('')

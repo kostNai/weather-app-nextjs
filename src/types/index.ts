@@ -8,7 +8,7 @@ export type GeoCodingResponse = {
     state: string
 }
 
-type NestedWeatherType = [
+export type NestedWeatherType = [
     {
         id: number
         main: string
@@ -51,7 +51,7 @@ type DailyWeatherTempType = {
     min: number
 }
 
-type DailyWeatherType = {
+export type DailyWeatherType = {
     clouds: number
     dew_point: number
     dt: number

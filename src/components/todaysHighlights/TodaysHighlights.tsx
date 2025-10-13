@@ -33,20 +33,22 @@ export default function TodaysHighlights() {
             </div>
             <div className='border-2 border-gray-300 border-solid rounded-md h-fit flex flex-col gap-4 p-2'>
                 <h5 className='text-gray-400'>Вологість</h5>
-                <p>{weather?.current.humidity} %</p>
+                <p className='font-bold'>{weather?.current.humidity} %</p>
             </div>
             <div className='border-2 border-gray-300 border-solid rounded-md h-fit flex flex-col gap-4 p-2'>
                 <h5 className='text-gray-400'>Швидкість вітру</h5>
-                <p>{getWindSpeedInM(weather?.current?.wind_speed)} м/с</p>
+                <p className='font-bold'>
+                    {getWindSpeedInM(weather?.current?.wind_speed)} м/с
+                </p>
             </div>
             <div className='border-2 border-gray-300 border-solid rounded-md h-fit flex flex-col gap-4 p-2'>
                 <h5 className='text-gray-400'>Схід та захід сонця</h5>
                 <div className='flex gap-3'>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2 font-bold'>
                         <IoArrowUpCircle size={24} color='#9D92E3' />
                         {getDate(weather?.current.sunrise)}
                     </div>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2 font-bold'>
                         <IoArrowDownCircle size={24} color='#9D92E3' />
                         {getDate(weather?.current.sunset)}
                     </div>

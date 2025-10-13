@@ -1,6 +1,7 @@
 import AddCity from '@/components/addCity/AddCity'
 import CityCard from '@/components/cityCard/CityCard'
 import CurrentLocationInfo from '@/components/currentLocationInfo/CurrentLocationInfo'
+import FewDaysForecast from '@/components/fewDaysForecast/FewDaysForecast'
 import Search from '@/components/search/Search'
 import TodaysHighlights from '@/components/todaysHighlights/TodaysHighlights'
 
@@ -11,7 +12,7 @@ export default async function Home() {
                 <Search />
             </div>
             <div className='pl-8 w-full flex h-full'>
-                <div className='w-[60%] pr-8 pt-8'>
+                <div className='w-[70%] pr-8 pt-8'>
                     <CurrentLocationInfo />
                     <div className='mt-4 flex gap-10 h-fit'>
                         <CityCard />
@@ -25,7 +26,9 @@ export default async function Home() {
                     </div>
                     <div></div>
                 </div>
-                <div className='w-[40%] h-full bg-[#F6F4FC] '></div>
+                <div className='w-[30%] h-full bg-[#F6F4FC] '>
+                    <FewDaysForecast />
+                </div>
             </div>
         </div>
     )
